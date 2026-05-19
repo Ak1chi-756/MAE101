@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Đề Thi Trắc Nghiệm - Định Thức Ma Trận</title>
+
+<!-- MathJax -->
+<script>
+window.MathJax = {
+  tex: {
+    inlineMath: [['$', '$'], ['\\(', '\\)']]
+  }
+};
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg,#0f172a,#1e293b);
+    color:white;
+    padding:20px;
+}
+
+.container{
+    max-width:1100px;
+    margin:auto;
+}
+
+h1{
+    text-align:center;
+    margin-bottom:10px;
+    color:#38bdf8;
+}
+
+.subtitle{
+    text-align:center;
+    margin-bottom:30px;
+    color:#cbd5e1;
+}
+
+.section-title{
+    margin:40px 0 20px;
+    padding:15px;
+    border-left:5px solid #38bdf8;
+    background:#1e293b;
+    font-size:24px;
+}
+
+.question{
+    background:#1e293b;
+    padding:20px;
+    border-radius:15px;
+    margin-bottom:25px;
+    box-shadow:0 0 10px rgba(0,0,0,0.3);
+}
+
+.question h3{
+    margin-bottom:15px;
+    color:#facc15;
+}
+
+.option{
+    display:block;
+    width:100%;
+    padding:12px;
+    margin:10px 0;
+    border:none;
+    border-radius:10px;
+    cursor:pointer;
+    background:#334155;
+    color:white;
+    text-align:left;
+    transition:0.3s;
+    font-size:16px;
+}
+
+.option:hover{
+    background:#475569;
+}
+
+.correct{
+    background:#16a34a !important;
+    color:white;
+}
+
+.wrong{
+    background:#dc2626 !important;
+    color:white;
+}
+
+.explanation{
+    margin-top:15px;
+    padding:15px;
+    border-radius:10px;
+    background:#0f172a;
+    display:none;
+    border-left:5px solid #38bdf8;
+}
+
+.tip{
+    margin-top:10px;
+    color:#facc15;
+    font-style:italic;
+}
+
+.score-box{
+    position:fixed;
+    top:20px;
+    right:20px;
+    background:#0f172a;
+    padding:15px;
+    border-radius:15px;
+    border:2px solid #38bdf8;
+    z-index:1000;
+}
+
+.download-btn{
+    display:block;
+    width:300px;
+    margin:40px auto;
+    padding:15px;
+    background:#38bdf8;
+    color:black;
+    border:none;
+    border-radius:12px;
+    font-size:18px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.download-btn:hover{
+    background:#0ea5e9;
+}
+
+footer{
+    margin-top:50px;
+    text-align:center;
+    color:#94a3b8;
+}
+</style>
+</head>
+
+<body>
+
+<div class="score-box">
+    <h2>Điểm</h2>
+    <p><span id="score">0</span> / 20</p>
+</div>
+
+<div class="container">
+
+<h1>ĐỀ THI TRẮC NGHIỆM TƯƠNG TÁC</h1>
+<p class="subtitle">
+Chủ đề: Định thức ma trận – Đại số tuyến tính
+</p>
+
+<!-- ================= LÝ THUYẾT ================= -->
+
+<div class="section-title">PHẦN I — 5 CÂU LÝ THUYẾT</div>
+
+<div id="quiz-container"></div>
+
+<button class="download-btn" onclick="downloadHTML()">
+⬇ Tải File HTML
+</button>
+
+<footer>
+Ứng dụng học tập tương tác bằng HTML + JavaScript + MathJax
+</footer>
+
+</div>
+
+<script>
+
+const questions = [
+
+/* ================= LÝ THUYẾT ================= */
+
+{
+section:"Lý thuyết",
+q:"1. Ý nghĩa hình học của định thức ma trận $2\\times2$ là gì?",
+options:[
+"Chu vi hình bình hành",
+"Diện tích có dấu của hình bình hành",
+"Độ dài vector",
+"Góc giữa hai vector"
+],
+answer:1,
+explanation:"Định thức của ma trận $2\\times2$ biểu diễn diện tích có dấu của hình bình hành tạo bởi hai vector cột.",
+tip:"Mẹo nhanh: Nhắc tới 'hình học + định thức 2x2' → nghĩ ngay tới DIỆN TÍCH."
+},
+
+{
+section:"Lý thuyết",
+q:"2. Nếu $\\det(A)=0$ thì điều gì xảy ra?",
+options:[
+"Ma trận khả nghịch",
+"Ma trận đơn vị",
+"Ma trận không khả nghịch",
+"Ma trận trực giao"
+],
+answer:2,
+explanation:"Khi định thức bằng 0, không gian bị 'bẹp', các vector phụ thuộc tuyến tính nên ma trận không thể nghịch đảo.",
+tip:"Mẹo: det = 0 ⇒ nhớ ngay từ khóa 'suy biến'."
+},
+
+{
+section:"Lý thuyết",
+q:"3. Công thức nào đúng?",
+options:[
+"$\\det(AB)=\\det(A)+\\det(B)$",
+"$\\det(AB)=\\det(A)\\det(B)$",
+"$\\det(A+B)=\\det(A)\\det(B)$",
+"$\\det(A)=\\det(A^2)$"
+],
+answer:1,
+explanation:"Định thức của tích bằng tích các định thức.",
+tip:"Mẹo: Nhân ma trận ⇒ nhân định thức."
+},
+
+{
+section:"Lý thuyết",
+q:"4. Điều kiện để ma trận có nghịch đảo là:",
+options:[
+"$\\det(A)=0$",
+"$\\det(A)=1$",
+"$\\det(A)\\neq0$",
+"$\\det(A)<0$"
+],
+answer:2,
+explanation:"Ma trận khả nghịch khi và chỉ khi định thức khác 0.",
+tip:"Mẹo cực nhanh: Invertible ⇔ det ≠ 0."
+},
+
+{
+section:"Lý thuyết",
+q:"5. Định thức bằng tích của:",
+options:[
+"Tổng các trị riêng",
+"Các hàng",
+"Các cột",
+"Các trị riêng"
+],
+answer:3,
+explanation:"Nếu ma trận có trị riêng $\\lambda_1,\\lambda_2,...$, thì $\\det(A)=\\lambda_1\\lambda_2...$",
+tip:"Mẹo: trace → tổng trị riêng, determinant → tích trị riêng."
+},
+
+/* ================= DỄ ================= */
+
+{
+section:"Dễ",
+q:"6. Tính $\\det\\begin{pmatrix}2&1\\\\1&3\\end{pmatrix}$",
+options:["4","5","6","7"],
+answer:1,
+explanation:"$2\\cdot3-1\\cdot1=6-1=5$",
+tip:"Mẹo: Ma trận 2x2 ⇒ ad - bc."
+},
+
+{
+section:"Dễ",
+q:"7. Tính $\\det\\begin{pmatrix}4&0\\\\0&2\\end{pmatrix}$",
+options:["8","6","4","2"],
+answer:0,
+explanation:"$4\\cdot2-0=8$",
+tip:"Mẹo: Ma trận chéo ⇒ nhân các phần tử trên đường chéo."
+},
+
+{
+section:"Dễ",
+q:"8. Tính $\\det\\begin{pmatrix}1&2\\\\3&4\\end{pmatrix}$",
+options:["-2","2","10","0"],
+answer:0,
+explanation:"$1\\cdot4-2\\cdot3=4-6=-2$",
+tip:"Mẹo: Nếu bc lớn hơn ad ⇒ kết quả âm."
+},
+
+{
+section:"Dễ",
+q:"9. Nếu đổi chỗ hai hàng của ma trận thì:",
+options:[
+"Định thức giữ nguyên",
+"Định thức đổi dấu",
+"Định thức bằng 0",
+"Định thức nhân đôi"
+],
+answer:1,
+explanation:"Đổi hai hàng làm định thức đổi dấu.",
+tip:"Mẹo: Swap hàng ⇒ đổi dấu."
+},
+
+{
+section:"Dễ",
+q:"10. Tính $\\det(I_3)$",
+options:["0","1","3","-1"],
+answer:1,
+explanation:"Ma trận đơn vị không làm thay đổi thể tích nên định thức bằng 1.",
+tip:"Mẹo: det(I)=1 luôn đúng."
+},
+
+/* ================= TRUNG BÌNH ================= */
+
+{
+section:"Trung bình",
+q:"11. Tính $\\det\\begin{pmatrix}3&2\\\\5&4\\end{pmatrix}$",
+options:["2","1","-2","12"],
+answer:0,
+explanation:"$3\\cdot4-2\\cdot5=12-10=2$",
+tip:"Mẹo: Tính ad trước rồi trừ bc."
+},
+
+{
+section:"Trung bình",
+q:"12. Nếu một hàng nhân với 5 thì định thức:",
+options:[
+"Không đổi",
+"Nhân 5",
+"Chia 5",
+"Đổi dấu"
+],
+answer:1,
+explanation:"Nhân một hàng với k ⇒ định thức cũng nhân k.",
+tip:"Mẹo: Scale hàng ⇒ scale determinant."
+},
+
+{
+section:"Trung bình",
+q:"13. Tính $\\det\\begin{pmatrix}1&0&0\\\\0&2&0\\\\0&0&3\\end{pmatrix}$",
+options:["5","6","0","3"],
+answer:1,
+explanation:"Ma trận đường chéo ⇒ nhân các phần tử chéo: $1\\cdot2\\cdot3=6$",
+tip:"Mẹo: Ma trận tam giác/chéo ⇒ chỉ cần nhân đường chéo."
+},
+
+{
+section:"Trung bình",
+q:"14. Nếu hai hàng tỉ lệ thì định thức:",
+options:["1","Âm","0","Không xác định"],
+answer:2,
+explanation:"Hai hàng tỉ lệ ⇒ không gian bị bẹp ⇒ determinant bằng 0.",
+tip:"Mẹo: Hai hàng giống hướng ⇒ det=0."
+},
+
+{
+section:"Trung bình",
+q:"15. Tính $\\det\\begin{pmatrix}2&5\\\\1&2\\end{pmatrix}$",
+options:["-1","1","4","9"],
+answer:0,
+explanation:"$2\\cdot2-5\\cdot1=4-5=-1$",
+tip:"Mẹo: Ước lượng dấu trước khi tính."
+},
+
+/* ================= KHÓ ================= */
+
+{
+section:"Khó",
+q:"16. Tính $\\det\\begin{pmatrix}1&2&3\\\\0&1&4\\\\5&6&0\\end{pmatrix}$",
+options:["1","-1","10","0"],
+answer:0,
+explanation:"Khai triển determinant cho kết quả bằng 1.",
+tip:"Mẹo: Chọn hàng/cột có số 0 để khai triển Laplace nhanh hơn."
+},
+
+{
+section:"Khó",
+q:"17. Nếu $\\det(A)=2$ và $\\det(B)=3$ thì $\\det(AB)$ bằng:",
+options:["5","6","1","0"],
+answer:1,
+explanation:"$\\det(AB)=\\det(A)\\det(B)=2\\cdot3=6$",
+tip:"Mẹo: Nhìn thấy AB ⇒ nghĩ tới phép nhân định thức."
+},
+
+{
+section:"Khó",
+q:"18. Tính $\\det\\begin{pmatrix}2&1&0\\\\0&3&1\\\\0&0&4\\end{pmatrix}$",
+options:["24","9","12","8"],
+answer:0,
+explanation:"Ma trận tam giác trên ⇒ determinant bằng tích đường chéo: $2\\cdot3\\cdot4=24$",
+tip:"Mẹo: Tam giác trên/dưới ⇒ nhân đường chéo."
+},
+
+{
+section:"Khó",
+q:"19. Nếu ma trận có một hàng toàn số 0 thì:",
+options:[
+"det = 1",
+"det = -1",
+"det = 0",
+"Không xác định"
+],
+answer:2,
+explanation:"Một hàng 0 làm thể tích biến mất hoàn toàn nên determinant bằng 0.",
+tip:"Mẹo: Hàng zero ⇒ volume zero ⇒ det zero."
+},
+
+{
+section:"Khó",
+q:"20. Nghiệm của $\\det(A-\\lambda I)=0$ được gọi là:",
+options:[
+"Định thức",
+"Trị riêng",
+"Ma trận nghịch đảo",
+"Vector đơn vị"
+],
+answer:1,
+explanation:"Đây là phương trình đặc trưng dùng để tìm trị riêng.",
+tip:"Mẹo: det(A-λI)=0 ⇒ eigenvalues."
+}
+
+];
+
+let score = 0;
+
+const quizContainer = document.getElementById("quiz-container");
+
+questions.forEach((q,index)=>{
+
+const div = document.createElement("div");
+div.classList.add("question");
+
+div.innerHTML = `
+<h3>${q.section} - Câu ${index+1}</h3>
+<p>${q.q}</p>
+<div class="options"></div>
+<div class="explanation" id="exp-${index}">
+<b>Đáp án đúng:</b> ${String.fromCharCode(65+q.answer)}<br><br>
+${q.explanation}
+<div class="tip">
+💡 ${q.tip}
+</div>
+</div>
+`;
+
+const optionsDiv = div.querySelector(".options");
+
+q.options.forEach((opt,i)=>{
+
+const btn = document.createElement("button");
+btn.classList.add("option");
+btn.innerHTML = `${String.fromCharCode(65+i)}. ${opt}`;
+
+btn.onclick = ()=>{
+
+const buttons = optionsDiv.querySelectorAll(".option");
+
+buttons.forEach(b=>b.disabled=true);
+
+if(i===q.answer){
+btn.classList.add("correct");
+score++;
+document.getElementById("score").innerText = score;
+}else{
+btn.classList.add("wrong");
+buttons[q.answer].classList.add("correct");
+}
+
+document.getElementById(`exp-${index}`).style.display="block";
+
+};
+
+optionsDiv.appendChild(btn);
+
+});
+
+quizContainer.appendChild(div);
+
+});
+
+function downloadHTML(){
+
+const content = document.documentElement.outerHTML;
+
+const blob = new Blob([content], {type:"text/html"});
+
+const a = document.createElement("a");
+
+a.href = URL.createObjectURL(blob);
+
+a.download = "de-thi-dinh-thuc-ma-tran.html";
+
+a.click();
+
+}
+
+</script>
+
+</body>
+</html>
