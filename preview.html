@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Đề Thi Trắc Nghiệm - Định Lý Trung Bình Tích Phân</title>
+
+  <!-- MathJax -->
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      }
+    };
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <style>
+    body{
+      font-family: Arial, sans-serif;
+      background:#f5f7fb;
+      margin:0;
+      padding:20px;
+      line-height:1.6;
+    }
+
+    h1{
+      text-align:center;
+      color:#1e3a8a;
+    }
+
+    .container{
+      max-width:1100px;
+      margin:auto;
+    }
+
+    .question{
+      background:white;
+      padding:20px;
+      margin-bottom:25px;
+      border-radius:12px;
+      box-shadow:0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    .question h3{
+      color:#111827;
+    }
+
+    .level{
+      display:inline-block;
+      padding:4px 10px;
+      border-radius:20px;
+      font-size:12px;
+      color:white;
+      margin-bottom:10px;
+    }
+
+    .easy{
+      background:#16a34a;
+    }
+
+    .medium{
+      background:#f59e0b;
+    }
+
+    .hard{
+      background:#dc2626;
+    }
+
+    .theory{
+      background:#2563eb;
+    }
+
+    .option{
+      background:#eef2ff;
+      margin:10px 0;
+      padding:12px;
+      border-radius:8px;
+      cursor:pointer;
+      transition:0.3s;
+      border:2px solid transparent;
+    }
+
+    .option:hover{
+      background:#dbeafe;
+    }
+
+    .correct{
+      background:#dcfce7 !important;
+      border-color:#16a34a !important;
+      color:#166534;
+      font-weight:bold;
+    }
+
+    .wrong{
+      background:#fee2e2 !important;
+      border-color:#dc2626 !important;
+      color:#991b1b;
+      font-weight:bold;
+    }
+
+    .explanation{
+      margin-top:15px;
+      padding:15px;
+      background:#f8fafc;
+      border-left:5px solid #2563eb;
+      border-radius:8px;
+      display:none;
+    }
+
+    .tip{
+      margin-top:10px;
+      padding:10px;
+      background:#fef3c7;
+      border-left:5px solid #f59e0b;
+      border-radius:8px;
+    }
+
+    .score-board{
+      position:sticky;
+      top:0;
+      background:white;
+      padding:15px;
+      margin-bottom:20px;
+      border-radius:10px;
+      box-shadow:0 2px 8px rgba(0,0,0,0.1);
+      z-index:999;
+    }
+
+    .footer{
+      text-align:center;
+      margin-top:40px;
+      color:#6b7280;
+    }
+
+    button.download{
+      background:#2563eb;
+      color:white;
+      border:none;
+      padding:12px 20px;
+      border-radius:10px;
+      cursor:pointer;
+      font-size:16px;
+      margin-top:10px;
+    }
+
+    button.download:hover{
+      background:#1d4ed8;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+
+  <h1>ĐỀ THI TRẮC NGHIỆM TƯƠNG TÁC</h1>
+  <h2 style="text-align:center;color:#374151;">
+    ĐỊNH LÝ TRUNG BÌNH TÍCH PHÂN
+  </h2>
+
+  <div class="score-board">
+    <h2>Điểm hiện tại: <span id="score">0</span>/20</h2>
+    <button class="download" onclick="downloadHTML()">Tải File HTML</button>
+  </div>
+
+  <div id="quiz"></div>
+
+  <div class="footer">
+    Theo phương pháp sư phạm DUYMT - Interactive Quiz
+  </div>
+
+</div>
+
+<script>
+
+const questions = [
+
+/* =========================
+   5 CÂU LÝ THUYẾT
+========================= */
+
+{
+type:"Lý thuyết",
+level:"theory",
+question:"Ý nghĩa hình học của trung bình tích phân là gì?",
+options:[
+"Độ dốc trung bình của đồ thị",
+"Chiều cao trung bình của đồ thị",
+"Diện tích trung bình của đồ thị",
+"Tốc độ biến thiên của hàm số"
+],
+correct:1,
+explanation:"Theo bài giảng, trung bình tích phân chính là chiều cao trung bình của đồ thị trên đoạn xét.",
+tip:"Nhớ công thức: diện tích chia chiều dài = chiều cao trung bình."
+},
+
+{
+type:"Lý thuyết",
+level:"theory",
+question:"Công thức trung bình tích phân của hàm số liên tục trên $[a,b]$ là:",
+options:[
+"$\\int_a^b f(x)dx$",
+"$\\dfrac{1}{b-a}\\int_a^b f(x)dx$",
+"$\\dfrac{b-a}{\\int_a^b f(x)dx}$",
+"$f(a)+f(b)$"
+],
+correct:1,
+explanation:"Định lý trung bình tích phân có công thức chuẩn: $$f_{tb}=\\dfrac{1}{b-a}\\int_a^b f(x)dx$$",
+tip:"Luôn nhớ phải chia cho độ dài đoạn $b-a$."
+},
+
+{
+type:"Lý thuyết",
+level:"theory",
+question:"Trong công thức trung bình tích phân, $\\int_a^b f(x)dx$ biểu diễn điều gì?",
+options:[
+"Độ dài đoạn",
+"Độ cong đồ thị",
+"Diện tích dưới đường cong",
+"Giá trị lớn nhất"
+],
+correct:2,
+explanation:"Tích phân xác định biểu diễn diện tích dưới đường cong.",
+tip:"Tích phân xác định thường gắn với diện tích."
+},
+
+{
+type:"Lý thuyết",
+level:"theory",
+question:"Theo bài giảng, trung bình tích phân giúp thay đường cong nhấp nhô bằng:",
+options:[
+"Một hình tròn",
+"Một tam giác",
+"Một hình chữ nhật cùng diện tích",
+"Một đường thẳng"
+],
+correct:2,
+explanation:"Người ta thay toàn bộ đường cong bằng hình chữ nhật có cùng diện tích.",
+tip:"Chiều cao hình chữ nhật chính là giá trị trung bình."
+},
+
+{
+type:"Lý thuyết",
+level:"theory",
+question:"Điều kiện để áp dụng định lý trung bình tích phân là:",
+options:[
+"Hàm số gián đoạn",
+"Hàm số liên tục trên đoạn",
+"Hàm số có đạo hàm",
+"Hàm số tuần hoàn"
+],
+correct:1,
+explanation:"Định lý yêu cầu hàm số liên tục trên đoạn $[a,b]$.",
+tip:"Liên tục là điều kiện rất hay gặp trong tích phân."
+},
+
+/* =========================
+   5 CÂU DỄ
+========================= */
+
+{
+type:"Bài tập",
+level:"easy",
+question:"Tính giá trị trung bình của $f(x)=x$ trên đoạn $[0,2]$",
+options:[
+"$1$",
+"$2$",
+"$\\dfrac12$",
+"$\\dfrac32$"
+],
+correct:0,
+explanation:"$$f_{tb}=\\frac{1}{2-0}\\int_0^2 xdx=\\frac12\\left[\\frac{x^2}{2}\\right]_0^2=1$$",
+tip:"Hàm bậc nhất thường có trung bình bằng trung điểm hai đầu."
+},
+
+{
+type:"Bài tập",
+level:"easy",
+question:"Tính $\\int_0^1 x^2dx$",
+options:[
+"$\\dfrac13$",
+"$1$",
+"$\\dfrac12$",
+"$2$"
+],
+correct:0,
+explanation:"$$\\int_0^1 x^2dx=\\left[\\frac{x^3}{3}\\right]_0^1=\\frac13$$",
+tip:"Nhớ quy tắc: $\\int x^n dx = \\dfrac{x^{n+1}}{n+1}$."
+},
+
+{
+type:"Bài tập",
+level:"easy",
+question:"Giá trị trung bình của $f(x)=3$ trên $[0,5]$ là:",
+options:[
+"$0$",
+"$3$",
+"$5$",
+"$15$"
+],
+correct:1,
+explanation:"Hàm hằng luôn có giá trị trung bình bằng chính nó.",
+tip:"Không cần tích phân nếu hàm số là hằng số."
+},
+
+{
+type:"Bài tập",
+level:"easy",
+question:"Độ dài đoạn $[2,7]$ là:",
+options:[
+"$9$",
+"$7$",
+"$5$",
+"$14$"
+],
+correct:2,
+explanation:"Độ dài đoạn bằng $b-a=7-2=5$.",
+tip:"Luôn kiểm tra mẫu số $b-a$."
+},
+
+{
+type:"Bài tập",
+level:"easy",
+question:"Tính trung bình của $f(x)=x^2$ trên đoạn $[0,1]$",
+options:[
+"$\\dfrac13$",
+"$\\dfrac12$",
+"$1$",
+"$2$"
+],
+correct:0,
+explanation:"$$f_{tb}=\\int_0^1 x^2dx=\\frac13$$ vì độ dài đoạn bằng 1.",
+tip:"Nếu đoạn có độ dài 1 thì không cần chia thêm."
+},
+
+/* =========================
+   5 CÂU TRUNG BÌNH
+========================= */
+
+{
+type:"Bài tập",
+level:"medium",
+question:"Tính giá trị trung bình của $f(x)=x^2$ trên đoạn $[0,2]$",
+options:[
+"$\\dfrac43$",
+"$2$",
+"$\\dfrac83$",
+"$4$"
+],
+correct:0,
+explanation:"$$f_{tb}=\\frac12\\int_0^2 x^2dx=\\frac12\\cdot\\frac83=\\frac43$$",
+tip:"Đây chính là ví dụ trong bài giảng."
+},
+
+{
+type:"Bài tập",
+level:"medium",
+question:"Tính giá trị trung bình của $f(x)=2x+1$ trên đoạn $[1,3]$",
+options:[
+"$5$",
+"$4$",
+"$3$",
+"$6$"
+],
+correct:0,
+explanation:"$$f_{tb}=\\frac{1}{2}\\int_1^3(2x+1)dx=\\frac12[ x^2+x ]_1^3=5$$",
+tip:"Hàm bậc nhất có thể lấy trung bình hai đầu: $(3+7)/2=5$."
+},
+
+{
+type:"Bài tập",
+level:"medium",
+question:"Tính $\\int_0^2 (x+1)dx$",
+options:[
+"$2$",
+"$4$",
+"$6$",
+"$8$"
+],
+correct:1,
+explanation:"$$\\left[\\frac{x^2}{2}+x\\right]_0^2=2+2=4$$",
+tip:"Tách tích phân thành từng phần nhỏ."
+},
+
+{
+type:"Bài tập",
+level:"medium",
+question:"Giá trị trung bình của $f(x)=4x$ trên đoạn $[0,2]$ là:",
+options:[
+"$2$",
+"$4$",
+"$6$",
+"$8$"
+],
+correct:1,
+explanation:"$$f_{tb}=\\frac12\\int_0^2 4x dx=\\frac12\\cdot8=4$$",
+tip:"Có thể lấy trung bình hai đầu: $(0+8)/2=4$."
+},
+
+{
+type:"Bài tập",
+level:"medium",
+question:"Tính giá trị trung bình của $f(x)=x^3$ trên đoạn $[0,2]$",
+options:[
+"$2$",
+"$4$",
+"$1$",
+"$8$"
+],
+correct:1,
+explanation:"$$f_{tb}=\\frac12\\int_0^2 x^3dx=\\frac12\\cdot4=2$$",
+tip:"Cẩn thận khi chia cho $b-a$."
+},
+
+/* =========================
+   5 CÂU KHÓ
+========================= */
+
+{
+type:"Bài tập",
+level:"hard",
+question:"Tính giá trị trung bình của $f(x)=\\sin x$ trên đoạn $[0,\\pi]$",
+options:[
+"$\\dfrac{2}{\\pi}$",
+"$1$",
+"$0$",
+"$\\pi$"
+],
+correct:0,
+explanation:"$$f_{tb}=\\frac1\\pi\\int_0^\\pi \\sin x dx=\\frac1\\pi[-\\cos x]_0^\\pi=\\frac2\\pi$$",
+tip:"Hàm sin trên $[0,\\pi]$ luôn dương."
+},
+
+{
+type:"Bài tập",
+level:"hard",
+question:"Tính trung bình của $f(x)=e^x$ trên đoạn $[0,1]$",
+options:[
+"$e$",
+"$e-1$",
+"$1$",
+"$e+1$"
+],
+correct:1,
+explanation:"$$f_{tb}=\\int_0^1 e^x dx=[e^x]_0^1=e-1$$",
+tip:"Đoạn dài 1 nên không cần chia."
+},
+
+{
+type:"Bài tập",
+level:"hard",
+question:"Tính giá trị trung bình của $f(x)=\\ln x$ trên đoạn $[1,e]$",
+options:[
+"$0$",
+"$1$",
+"$\\dfrac{1}{e-1}$",
+"$e$"
+],
+correct:1,
+explanation:"$$f_{tb}=\\frac1{e-1}\\int_1^e \\ln xdx$$ Ta được kết quả bằng 1.",
+tip:"Nhớ công thức: $\\int \\ln xdx=x\\ln x-x$."
+},
+
+{
+type:"Bài tập",
+level:"hard",
+question:"Giá trị trung bình của $f(x)=x^2+1$ trên đoạn $[-1,1]$ là:",
+options:[
+"$\\dfrac53$",
+"$1$",
+"$2$",
+"$\\dfrac23$"
+],
+correct:0,
+explanation:"$$f_{tb}=\\frac12\\int_{-1}^{1}(x^2+1)dx=\\frac12\\cdot\\frac{10}{3}=\\frac53$$",
+tip:"Hàm chẵn trên đoạn đối xứng rất thuận lợi để tính."
+},
+
+{
+type:"Bài tập",
+level:"hard",
+question:"Tính trung bình của $f(x)=\\cos x$ trên đoạn $[0,\\frac{\\pi}{2}]$",
+options:[
+"$\\dfrac{2}{\\pi}$",
+"$1$",
+"$0$",
+"$\\pi$"
+],
+correct:0,
+explanation:"$$f_{tb}=\\frac{2}{\\pi}\\int_0^{\\pi/2}\\cos xdx=\\frac{2}{\\pi}$$",
+tip:"Đoạn có độ dài $\\frac{\\pi}{2}$ nên phải chia đúng."
+}
+
+];
+
+let score = 0;
+
+const quiz = document.getElementById("quiz");
+
+questions.forEach((q,index)=>{
+
+  const div = document.createElement("div");
+  div.className = "question";
+
+  div.innerHTML = `
+    <div class="level ${q.level}">
+      ${q.type} - ${
+        q.level==="easy"?"Dễ":
+        q.level==="medium"?"Trung bình":
+        q.level==="hard"?"Khó":"Lý thuyết"
+      }
+    </div>
+
+    <h3>Câu ${index+1}: ${q.question}</h3>
+
+    <div class="options">
+      ${q.options.map((opt,i)=>
+        `<div class="option" onclick="checkAnswer(this,${i},${q.correct},${index})">${opt}</div>`
+      ).join("")}
+    </div>
+
+    <div class="explanation" id="exp-${index}">
+      <strong>Đáp án đúng:</strong> ${q.options[q.correct]} <br><br>
+      <strong>Giải thích:</strong> ${q.explanation}
+
+      <div class="tip">
+        <strong>Mẹo làm nhanh:</strong> ${q.tip}
+      </div>
+    </div>
+  `;
+
+  quiz.appendChild(div);
+
+});
+
+function checkAnswer(element,selected,correct,index){
+
+  const parent = element.parentElement;
+  const options = parent.querySelectorAll(".option");
+
+  if(parent.classList.contains("done")) return;
+
+  parent.classList.add("done");
+
+  options.forEach((op,i)=>{
+
+    if(i===correct){
+      op.classList.add("correct");
+    }
+
+    if(i===selected && selected!==correct){
+      op.classList.add("wrong");
+    }
+
+  });
+
+  if(selected===correct){
+    score++;
+    document.getElementById("score").innerText = score;
+  }
+
+  document.getElementById(`exp-${index}`).style.display="block";
+
+  MathJax.typeset();
+}
+
+function downloadHTML(){
+
+  const htmlContent = document.documentElement.outerHTML;
+
+  const blob = new Blob([htmlContent], {type:"text/html"});
+
+  const a = document.createElement("a");
+
+  a.href = URL.createObjectURL(blob);
+
+  a.download = "de-thi-trung-binh-tich-phan.html";
+
+  a.click();
+}
+
+MathJax.typeset();
+
+</script>
+
+</body>
+</html>
